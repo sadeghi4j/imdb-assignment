@@ -11,8 +11,8 @@ import java.util.List;
 public interface MediaItemRepository extends JpaRepository<MediaItem, String> {
 
     @Query("SELECT p1.mediaItem FROM Principal p1 JOIN Principal p2 on p1.mediaItem.id = p2.mediaItem.id " +
-            "where p1.person.deathYear is null and p1.person.id = p2.person.id and p1.role.name = 'director' and p2.role.name = 'writer'")
-    List<MediaItem> findAllMediaItemsWithSameWriterAndDirectorWhoIsAlive();
+            "where p1.person.deathYear is null and p1.person.id = p2.person.id and p1.role.id = ?1 and p2.role.id = ?2")
+    List<MediaItem> findAllMediaItemsWithSameWriterAndDirectorWhoIsAlive(Integer directorId, Integer writerId);
 
     @Query("SELECT p1.mediaItem FROM Principal p1 JOIN Principal p2 on p1.mediaItem.id = p2.mediaItem.id " +
             "where p1.person.id = p2.person.id and p1.role.name = 'actor' and p1.person.id = ?1 and p2.role.name = 'actor' and p2.person.id = ?2")
